@@ -1,6 +1,7 @@
 package com.pluralsight.candycoded;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 public class InfoActivity extends AppCompatActivity {
-
+    TextView mapView,phoneView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,19 +24,34 @@ public class InfoActivity extends AppCompatActivity {
                 load(uri).
                 into(candyStoreImageView);
 
-
+        mapView = findViewById(R.id.text_view_address);
+        mapView.setOnClickListener(onClickListener);
+        phoneView = findViewById(R.id.text_view_phone);
+        phoneView.setOnClickListener(onClickListener);
     }
 
     // ***
     // TODO - Task 2 - Launch the Google Maps Activity
     // ***
-    TextView mapView = findViewById(R.id.text_view_address);
-//    mapView..setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick (View v){
-//
-//        }
-//    }
+
+private View.OnClickListener onClickListener = new View.OnClickListener() {
+     @Override
+     public void onClick(View v) {
+         switch(v.getId()){
+             case R.id.text_view_address:
+                  //DO something
+                 Intent mapIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("google.navigation:q=618 E South St Orlando, F"));
+                 startActivity(mapIntent);
+             break;
+             case R.id.text_view_phone:
+                  //DO something
+                 Intent callIntent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:" +"(012)345-6789"));
+                 startActivity(callIntent);
+             break;
+         }
+
+   }
+};
             // ***
     // TODO - Task 3 - Launch the Phone Activity
     // ***
