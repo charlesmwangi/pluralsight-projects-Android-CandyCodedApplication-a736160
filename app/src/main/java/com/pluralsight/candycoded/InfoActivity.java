@@ -4,10 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
@@ -34,19 +35,30 @@ public class InfoActivity extends AppCompatActivity {
     // TODO - Task 2 - Launch the Google Maps Activity
     // ***
 
-private View.OnClickListener onClickListener = new View.OnClickListener() {
+
+    private Intent createMapIntent() {
+        //DO something
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("google.navigation:q=618 E South St Orlando, F"));
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
+        return mapIntent;
+    }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
      @Override
      public void onClick(View v) {
          switch(v.getId()){
              case R.id.text_view_address:
-                  //DO something
-                 Intent mapIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("google.navigation:q=618 E South St Orlando, F"));
-                 startActivity(mapIntent);
+                 createMapIntent();
+//                  //DO something
+//                 Intent mapIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("google.navigation:q=618 E South St Orlando, F"));
+//                 startActivity(mapIntent);
              break;
              case R.id.text_view_phone:
-                  //DO something
-                 Intent callIntent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:" +"(012)345-6789"));
-                 startActivity(callIntent);
+                 createPhoneIntent();
+//                  //DO something
+//                 Intent callIntent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:" +"(012)345-6789"));
+//                 startActivity(callIntent);
              break;
          }
 
@@ -55,4 +67,10 @@ private View.OnClickListener onClickListener = new View.OnClickListener() {
             // ***
     // TODO - Task 3 - Launch the Phone Activity
     // ***
+       private Intent createPhoneIntent(){
+        //DO something
+        Intent callIntent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:" +"(012)345-6789"));
+        startActivity(callIntent);
+        return callIntent;
+    }
 }

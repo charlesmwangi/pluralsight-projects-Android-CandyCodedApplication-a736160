@@ -3,12 +3,16 @@ package com.pluralsight.candycoded;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.pluralsight.candycoded.DB.CandyContract;
 import com.pluralsight.candycoded.DB.CandyContract.CandyEntry;
@@ -20,6 +24,8 @@ public class DetailActivity extends AppCompatActivity {
     public static final String SHARE_DESCRIPTION = "Look at this delicious candy from Candy Coded - ";
     public static final String HASHTAG_CANDYCODED = " #candycoded";
     String mCandyImageUrl = "";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,25 @@ public class DetailActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.detail, menu);
         return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.share_detail) {
+            createShareIntent();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    private Intent createShareIntent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.putExtra(mCandyImageUrl,"image");
+        shareIntent.putExtra(SHARE_DESCRIPTION,"description");
+        shareIntent.putExtra(HASHTAG_CANDYCODED,"hasgtag");
+        shareIntent.setType("image/*");
+        startActivity(shareIntent);
+        // For a file in shared storage.  For data in private storage, use a ContentProvider.
+       // Uri uri = Uri.fromFile(getFileStreamPath(pathToImage));
+       // shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        return shareIntent;
     }
 
     // ***
